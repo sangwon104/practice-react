@@ -3,6 +3,21 @@ import "./App.css";
 
 export default class App extends Component {
 
+  state = {
+    todos : [
+      {
+        id: "1",
+        title: "공부하기",
+        completed: true
+      },
+      {
+        id: "2",
+        title: "청소하기",
+        completed: false
+      }
+    ],
+    value : ""
+  }
   btnStyle = {
     color: "#fff",
     border: "none",
@@ -21,25 +36,12 @@ export default class App extends Component {
   }
 
   deleteTodo = (id) => {
-    const newTodos = this.todos.filter(todo => todo.id !== id);
-    console.info('newTodos', newTodos);
+    const newTodos = this.state.todos.filter(todo => todo.id !== id);
+    this.setState({todos: newTodos});
   }
 
-  todos = [
-    {
-      id: "1",
-      title: "공부하기",
-      completed: true
-    },
-    {
-      id: "2",
-      title: "청소하기",
-      completed: false
-    }
-  ];
-
   render() {
-    const todoComponent = this.todos.map(todo => {
+    const todoComponent = this.state.todos.map(todo => {
       return (
         <div style={this.todoListStyle()} key={todo.id}>
           <input type="checkbox" defaultChecked={todo.completed} />
