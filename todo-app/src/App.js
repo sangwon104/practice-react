@@ -12,7 +12,7 @@ export default class App extends Component {
     float: "right",
   };
 
-  getStyle = () => {
+  todoListStyle = () => {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
@@ -20,19 +20,38 @@ export default class App extends Component {
     }
   }
 
+  todoDatas = [
+    {
+      id: "1",
+      title: "공부하기",
+      completed: true
+    },
+    {
+      id: "2",
+      title: "청소하기",
+      completed: false
+    }
+  ];
+
   render() {
+    const todoComponent = this.todoDatas.map(todoData => {
+      return (
+        <div style={this.todoListStyle()} key={todoData.id}>
+          <input type="checkbox" defaultChecked={todoData.completed} />
+          {" "}{todoData.title}
+          <button style={this.btnStyle}>x</button>
+        </div>
+        );
+      }
+    );
+
     return (
       <div className="container">
         <div className="todoBlock">
           <div className="title ">
             <h1>할일 목록</h1>            
           </div>
-
-          <div style={this.getStyle()}>
-            <input type="checkbox" defaultChecked={false} />
-            세수하기
-            <button style={this.btnStyle}>x</button>
-          </div>
+          {todoComponent}
         </div>
       </div>
     );
