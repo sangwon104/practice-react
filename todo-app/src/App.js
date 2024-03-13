@@ -20,7 +20,12 @@ export default class App extends Component {
     }
   }
 
-  todoDatas = [
+  deleteTodo = (id) => {
+    const newTodos = this.todos.filter(todo => todo.id !== id);
+    console.info('newTodos', newTodos);
+  }
+
+  todos = [
     {
       id: "1",
       title: "공부하기",
@@ -34,12 +39,12 @@ export default class App extends Component {
   ];
 
   render() {
-    const todoComponent = this.todoDatas.map(todoData => {
+    const todoComponent = this.todos.map(todo => {
       return (
-        <div style={this.todoListStyle()} key={todoData.id}>
-          <input type="checkbox" defaultChecked={todoData.completed} />
-          {" "}{todoData.title}
-          <button style={this.btnStyle}>x</button>
+        <div style={this.todoListStyle()} key={todo.id}>
+          <input type="checkbox" defaultChecked={todo.completed} />
+          {" "}{todo.title}
+          <button style={this.btnStyle} onClick={() => this.deleteTodo(todo.id)}>x</button>
         </div>
         );
       }
