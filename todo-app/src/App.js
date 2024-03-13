@@ -4,18 +4,7 @@ import "./App.css";
 export default class App extends Component {
 
   state = {
-    todos : [
-      {
-        id: "1",
-        title: "공부하기",
-        completed: true
-      },
-      {
-        id: "2",
-        title: "청소하기",
-        completed: false
-      }
-    ],
+    todos : [],
     value : ""
   }
   btnStyle = {
@@ -27,11 +16,11 @@ export default class App extends Component {
     float: "right",
   };
 
-  todoListStyle = () => {
+  listStyle = (completed) => {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      TextDecoration: "none"
+      textDecoration: completed ? "line-through" : "none"
     }
   }
 
@@ -53,14 +42,25 @@ export default class App extends Component {
       title: this.state.value,
       completed: false
     }
-    this.setState({todos: [...this.state.todos, newTodo]});
+    this.setState({todos: [...this.state.todos, newTodo], value: ""});
+  }
+
+  changeCompleted(id) {
+    const changedTodos = this.state.todos.map((todo) => {
+      if (id === todo.id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+
+    this.setState({todo: changedTodos});
   }
 
   render() {
     const todoComponent = this.state.todos.map(todo => {
       return (
-        <div style={this.todoListStyle()} key={todo.id}>
-          <input type="checkbox" defaultChecked={todo.completed} />
+        <div style={this.listStyle(todo.completed)} key={todo.id}>
+          <input type="checkbox" defaultChecked={todo.completed} onClick={() => this.changeCompleted(todo.id)} />
           {" "}{todo.title}
           <button style={this.btnStyle} onClick={() => this.removeTodo(todo.id)}>x</button>
         </div>
